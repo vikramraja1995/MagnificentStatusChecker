@@ -1,0 +1,14 @@
+{
+  "name": "magnificent-monitor",
+  "version": "1.0.0",
+  "description": "A web app that monitors the health of magnificent server",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server/server.js",
+    "start:dev": "nodemon server/server.js",
+    "build": "webpack -p",
+    "build:dev": "webpack -d --watch"
+  },
+  "license": "GPL-3.0-or-later"
+}
