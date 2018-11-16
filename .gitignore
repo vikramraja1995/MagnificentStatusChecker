@@ -1,5 +1,8 @@
 # Ignore dependencies
 node_modules
 
+# Ignore env variables
+.env
+
 # Ignore build files
 client/dist/bundle.js
