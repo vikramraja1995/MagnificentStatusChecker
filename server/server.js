@@ -16,7 +16,7 @@ const getStatus = () => {
   // Get data from url and save to database with timestamp in Unix Time
   axios
     .get(url)
-    .then(res => res)
+    .then(res => ({ status: res.status, data: '' }))
     .catch((err) => {
       // If server is down, record status code 503
       const res = err.response !== undefined ? err.response : { status: 503, data: 'Service Unavailable' };
