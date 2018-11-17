@@ -40,6 +40,12 @@ const addStatus = (website, timestamp, code, response = '') => {
   return status.save();
 };
 
+// Get status from DB based on website and specified limit
+const getStatus = (website, limit) => {
+  console.log('test', website, limit);
+  return StatusHistory.find({ website }).limit(limit);
+};
+
 /* --------------------------------------------------------------------------------------------- */
 
-module.exports = { addStatus };
+module.exports = { addStatus, getStatus };

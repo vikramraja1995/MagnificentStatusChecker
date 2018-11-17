@@ -11,8 +11,8 @@ app.use('/', express.static('client/dist')); // Serve front end files on root pa
 app.use(bodyParser.json()); // Read all API calls as JSON data
 /* --------------------------------------------------------------------------------------------- */
 
-const url = 'http://localhost:12345';
 const getStatus = () => {
+  const url = 'http://localhost:12345';
   // Get data from url and save to database with timestamp in Unix Time
   axios
     .get(url)
@@ -26,6 +26,35 @@ const getStatus = () => {
 };
 
 setInterval(getStatus, 10000); // Poll the website every 20 seconds
+/* --------------------------------------------------------------------------------------------- */
+
+// Set up API route
+app.get('/api/status', (req, res) => {
+  let url = '';
+  let limit = 10; // Set hard limit of statuses returned to 10
+
+  if (typeof req.query.url === 'string') {
+    url = req.query.url; // eslint-disable-line prefer-destructuring
+  }
+  const numLimit = Number(req.query.limit);
+  // set limit to numLimit if it is a number, and is greated than 0
+  if (!Number.isNaN(numLimit) && numLimit > 0) {
+    limit = numLimit; // eslint-disable-line prefer-destructuring
+  }
+
+  db.getStatus(url, limit).then((statusHistory) => {
+    const history = [];
+    statusHistory.forEach((status) => {
+      // If resposne exists, push it to history array
+      if (status.response !== undefined) {
+        history.push({ timestamp: status.timestamp, code: status.code, response: status.response });
+      } else {
+        history.push({ timestamp: status.timestamp, code: status.code });
+      }
+    });
+    res.send(history);
+  });
+});
 /* --------------------------------------------------------------------------------------------- */
 
 // Listen to port specified in .env or on 3000
