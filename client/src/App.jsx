@@ -28,38 +28,26 @@ const Row = styled.tr`
 `;
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       error: 0,
       success: 0,
       noResponse: 0,
     };
-    this.getLatestStatus = this.getLatestStatus.bind(this);
+    this.saveStatusToState = this.saveStatusToState.bind(this);
   }
 
   componentDidMount() {
-    this.getLatestStatus();
-    setInterval(this.getLatestStatus, 20000);
+    this.saveStatusToState();
+    setInterval(this.saveStatusToState, 20000);
   }
 
-  getLatestStatus() {
-    // Get last 3 minutes of the magnificents server's health
-    fetch('/api/status?limit=15&url=http://localhost:12345')
-      .then(res => res.json())
-      .then((res) => {
-        let error = 0;
-        let success = 0;
-        let noResponse = 0;
-
-        // Count number of errors, successes and no responses
-        res.forEach(({ code }) => {
-          if (code === 503) noResponse += 1;
-          else if (code === 200) success += 1;
-          else error += 1;
-        });
-        this.setState({ error, success, noResponse });
-      });
+  saveStatusToState() {
+    const { getLatestStatus } = this.props;
+    getLatestStatus().then((res) => {
+      this.setState(res);
+    });
   }
 
   render() {
