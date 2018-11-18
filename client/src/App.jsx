@@ -1,5 +1,31 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import styled from 'styled-components';
+
+// Write CSS styling for table
+const Table = styled.table`
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+`;
+
+const Head = styled.th`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`;
+
+const Data = styled.td`
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+`;
+
+const Row = styled.tr`
+  &:nth-child(even) {
+    background-color: #dddddd;
+  }
+`;
 
 class App extends React.Component {
   constructor() {
@@ -32,7 +58,6 @@ class App extends React.Component {
           else if (code === 200) success += 1;
           else error += 1;
         });
-        console.log(error, success, noResponse);
         this.setState({ error, success, noResponse });
       });
   }
@@ -53,6 +78,29 @@ class App extends React.Component {
     return (
       <div>
         <h1>Health of Magnificent Server</h1>
+        <Table>
+          <thead>
+            <Row>
+              <Head>Status Type</Head>
+              <Head>Count</Head>
+            </Row>
+          </thead>
+          <tbody>
+            <Row>
+              <Data>Error</Data>
+              <Data>{error}</Data>
+            </Row>
+            <Row>
+              <Data>Success</Data>
+              <Data>{success}</Data>
+            </Row>
+            <Row>
+              <Data>No Response</Data>
+              <Data>{noResponse}</Data>
+            </Row>
+          </tbody>
+        </Table>
+
         <Pie data={data} />
       </div>
     );
