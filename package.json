@@ -8,7 +8,8 @@
     "start": "node server/server.js",
     "start:dev": "nodemon server/server.js",
     "build": "webpack -p",
-    "build:dev": "webpack -d --watch"
+    "build:dev": "webpack -d --watch",
+    "automate": "grunt automate"
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {
@@ -22,6 +23,9 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "grunt": "^1.0.3",
+    "grunt-env": "^0.4.4",
+    "grunt-run": "^0.8.1",
     "jest": "^23.6.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
