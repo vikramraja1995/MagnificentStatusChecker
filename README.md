@@ -28,12 +28,6 @@
 npm install
 ```
 
-> Compile React JSX to ES5 (bundle.js)
-
-```shell
-npm run build
-```
-
 > Copy the sample .env.sample file to .env
 
 ```shell
@@ -49,10 +43,44 @@ DB_HOST=localhost
 DB_NAME=magnificent_monitor
 ```
 
+## Automated Build, Test and Run
+
+> Run the following command to build, test, and run the server
+
+```shell
+npm run automate
+```
+
+## Manual
+
+> Compile React JSX to ES5 (bundle.js)
+
+```shell
+npm run build
+```
+
+> To build automatically as changes are made to the source code, run the following command
+
+```shell
+npm run build:dev
+```
+
+> Test the source code for errors
+
+```shell
+npm test
+```
+
 > Start the server
 
 ```shell
 npm start
+```
+
+> To automatically restart the server everytime changes are made to the source code, run the following command
+
+```shell
+npm run start:dev
 ```
 
 ---
@@ -92,6 +120,8 @@ Return data:
 ]
 ```
 
-As seen in the example above, the returned data contains the timestamp of the recorded status, the http code, and a response string. The response string is only found in entries with a status code of 500, and contain the data that the server being recorded returned.
+As seen in the example above, the returned data contains the timestamp of the recorded status, the http code, and a response string.
+The response string is only found in entries with a status code of 500, and contain the data that the server being recorded returned.
+The timestamp returned is in Unix / Epoch time, counted in seconds from January 1st, 1970 at 12:00 AM (UTC). This can be easily converted in most programming languages
 
 The server backend can be configured to record status history of any url, not just the magnificent server url. Hence, the API requires the URL that is being searched as a parameter.

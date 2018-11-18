@@ -7,7 +7,7 @@ describe('Get webpage status', () => {
     });
   });
 
-  // Function to call the server multiple times to until the require http code is met
+  // Function to call the server multiple times until the required http code is met
   const getCode = (code, trial = 0) => {
     if (trial >= 10) return;
     server.getStatus('http://localhost:12345').then((res) => {

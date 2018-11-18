@@ -24,7 +24,7 @@ describe('Test database connection', () => {
     const code = '200';
     db.addStatus(website, timestamp, code).then((res) => {
       expect(res.timestamp).toBe(timestamp); // Check if the saved record has the correct timestamp
-      db.StatusHistory.findByIdAndDelete(res.id); // Delete test record from database
+      db.StatusHistory.findByIdAndDelete(res.id); // Delete test entry from database
     });
   });
 });

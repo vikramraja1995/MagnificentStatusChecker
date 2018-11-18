@@ -38,13 +38,13 @@ app.get('/api/status', (req, res) => {
   const numLimit = Number(req.query.limit);
   // set limit to numLimit if it is a number, and is greated than 0
   if (!Number.isNaN(numLimit) && numLimit > 0) {
-    limit = numLimit; // eslint-disable-line prefer-destructuring
+    limit = numLimit;
   }
 
   db.getStatusHistory(url, limit).then((statusHistory) => {
     const history = [];
     statusHistory.forEach((status) => {
-      // If resposne exists, push it to history array
+      // If response exists, push it to history array
       if (status.response !== undefined) {
         history.push({ timestamp: status.timestamp, code: status.code, response: status.response });
       } else {
