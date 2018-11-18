@@ -83,6 +83,8 @@ npm start
 npm run start:dev
 ```
 
+> You can now access the webpage by going to http://localhost:<PORT> (PORT is specified in .env)
+
 ---
 
 ## Documentation
