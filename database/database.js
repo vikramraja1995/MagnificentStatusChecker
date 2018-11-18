@@ -15,7 +15,7 @@ db.on('error', e => console.error('Connection Error:', e));
 const statusHistorySchema = new mongoose.Schema(
   {
     website: String, // Which website's status is being saved
-    timestamp: String,
+    timestamp: Number,
     code: Number,
     response: String,
   },
@@ -41,11 +41,9 @@ const addStatus = (website, timestamp, code, response = '') => {
 };
 
 // Get status from DB based on website and specified limit
-const getStatus = (website, limit) => {
-  console.log('test', website, limit);
-  return StatusHistory.find({ website }).limit(limit);
-};
-
+const getStatusHistory = (website, limit) => StatusHistory.find({ website })
+  .sort({ timestamp: 'desc' })
+  .limit(limit);
 /* --------------------------------------------------------------------------------------------- */
 
-module.exports = { addStatus, getStatus };
+module.exports = { StatusHistory, addStatus, getStatusHistory };

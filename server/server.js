@@ -11,21 +11,20 @@ app.use('/', express.static('client/dist')); // Serve front end files on root pa
 app.use(bodyParser.json()); // Read all API calls as JSON data
 /* --------------------------------------------------------------------------------------------- */
 
-const getStatus = () => {
-  const url = 'http://localhost:12345';
-  // Get data from url and save to database with timestamp in Unix Time
-  axios
-    .get(url)
-    .then(res => ({ status: res.status, data: '' }))
-    .catch((err) => {
-      // If server is down, record status code 503
-      const res = err.response !== undefined ? err.response : { status: 503, data: 'Service Unavailable' };
-      return res;
-    })
-    .then(res => db.addStatus(url, Date.now(), res.status, res.data));
-};
+const getStatus = url => axios
+  .get(url)
+  .then(res => ({ status: res.status, data: '' }))
+  .catch((err) => {
+    // If server is down, record status code 503
+    const res = err.response !== undefined ? err.response : { status: 503, data: 'Service Unavailable' };
+    return res;
+  });
 
-setInterval(getStatus, 10000); // Poll the website every 20 seconds
+// Poll the website every 20 seconds and save status to database
+setInterval(() => {
+  const url = 'http://localhost:12345';
+  getStatus(url).then(res => db.addStatus(url, Date.now(), res.status, res.data));
+}, 20000);
 /* --------------------------------------------------------------------------------------------- */
 
 // Set up API route
@@ -42,7 +41,7 @@ app.get('/api/status', (req, res) => {
     limit = numLimit; // eslint-disable-line prefer-destructuring
   }
 
-  db.getStatus(url, limit).then((statusHistory) => {
+  db.getStatusHistory(url, limit).then((statusHistory) => {
     const history = [];
     statusHistory.forEach((status) => {
       // If resposne exists, push it to history array
@@ -59,5 +58,10 @@ app.get('/api/status', (req, res) => {
 
 // Listen to port specified in .env or on 3000
 const port = process.env.SERVER_PORT || 3000;
-// eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+if (process.env.NODE_ENV !== 'test') {
+  // eslint-disable-next-line no-console
+  app.listen(port, () => console.log(`Listening on port ${port}...`));
+}
+
+module.exports = { app, getStatus };
