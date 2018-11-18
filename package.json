@@ -4,7 +4,7 @@
   "description": "A web app that monitors the health of magnificent server",
   "main": "server/server.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "start": "node server/server.js",
     "start:dev": "nodemon server/server.js",
     "build": "webpack -p",
@@ -16,11 +16,13 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "enzyme": "^3.7.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
   },
